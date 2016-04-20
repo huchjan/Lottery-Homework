@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lottery Generator</title>
+
+    <style>
+        #output {
+            width: 100px;
+            height: 100px;
+            background-color: palegreen;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="message"></div>
+
+    <div id="output"></div>
+
+    <div id="userNumbers"></div>
+
+    <div id="money"></div>
+
+    <button onclick="playGame()">PLAY</button>
+
+    <p id="PLAY">Select 4 distinct numbers from 1 to 10.</p>
+
+
+
+
+
+
+    <script>
+        var wallet = 10;
+        document.getElementById("money").innerHTML = "$" + wallet;    
+
+
+        function grabUserNumbers() {
+            var userArr = prompt("Enter your numbers");
+            userArr = userArr.split(",");
+            if (userArr.length > 4 || userArr.length < 4) {
+                document.getElementById("message").innerHTML = "Please choose 4 numbers!";
+            } else {
+                document.getElementById("userNumbers").innerHTML = userArr;
+            }
+            return userArr;
+        }
+
+
+        function randomNumber() {
+            var winningArr = [];
+            for (var i = 0; i < 4; i++) {
+                var numbers = Math.floor((Math.random() * 10) + 1);
+                winningArr.push(numbers);
+
+            }
+            return winningArr;
+        }
+
+
+        function matchArr() {
+            var winningArr = randomNumber();
+            var userArr = grabUserNumbers();
+            var correct = 0;
+            console.log(winningArr);
+            console.log(userArr);
+            for (var i = 0; i < userArr.length; i++) {
+
+                for (var j = 0; j < userArr.length; j++) {
+                    if (winningArr[i] == userArr[j]) {
+                        correct = correct + 1;
+                    }
+                }
+            }
+        return correct;
+        }
+
+        function playGame() {
+            var matches = matchArr();
+            if (wallet == 0) {
+                alert("You need more money to play!");
+                return;
+            } else { wallet = wallet - 2;
+                
+            }
+            if (matches == 1) {
+                wallet = wallet + 2;
+                document.getElementById("money").innerHTML = "$" + wallet;
+            }
+            else if(matches == 2){
+                wallet = wallet + 4;
+                document.getElementById("money").innerHTML = "$" + wallet;
+            }
+            else if(matches == 3){
+                wallet = wallet + 16;
+                document.getElementById("money").innerHTML = "$" + wallet;    
+            }
+            else if(matches == 0){
+            document.getElementById("money").innerHTML = "$" + wallet;    
+ 
+            }
+            else {
+                wallet = wallet + 4096;
+                document.getElementById("money").innerHTML = "$" + wallet;    
+
+            }
+                
+        } 
+        
+
+
+
+    </script>
+
+
+</body>
+
+</html>
